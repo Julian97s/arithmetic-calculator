@@ -1,8 +1,8 @@
 package calculator;
 
-public abstract class Operators extends Calculator{
-    double left_side;
-    double right_side;
+public abstract class Operators extends Token{
+    Token left_side;
+    Token right_side;
     
-    public abstract double eval();
+    
 }
