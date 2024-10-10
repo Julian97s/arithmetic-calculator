@@ -9,7 +9,7 @@ public class Main {
         Scanner s = new Scanner(System.in);
         String result = "Invalid input";
         if (s.hasNext() ){
-            result = s.nextLine();
+            result = s.nextLine().trim();
             Token calculation = Token.parseToken(result);            
             System.out.println(calculation.eval());
         } else {

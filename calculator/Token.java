@@ -25,8 +25,10 @@ public abstract class Token {
         // then i will split the string i evaluate the symbol to make an operation and i evakuate that last number so i cen get a double to operate with the last 
         // token in the list. wich will lakely have a symbol before the number so i have to do the same thing 
         for (int i = 0 ; i< operatorsList.size() ; i++){
-            if (str_operation.contains(operatorsList.get(i))){ // why is this not evaluating to true when it reads "5-5"? it evaluates contains as false 
-                operationArray = str_operation.split(operatorsList.get(i));
+            boolean contains_operand = str_operation.contains(operatorsList.get(i));
+            if (contains_operand){ 
+                String operator = operatorsList.get(i);
+                operationArray = str_operation.split(operator);
                 //now i will parse EACH half 
                 Token first_token = Token.parseToken(operationArray[0]);
                 Token second_token = Token.parseToken(operationArray[1]);
@@ -52,8 +54,8 @@ public abstract class Token {
         }   
         // im missing the return.. after im done evaluating the operators, WHAT DO I DO NEXT?
         // if im done with operations it means that i can evaluate those last 2 numbers so i can say that i will split that last pair of numbers and create 
-        // Token left_number = new Number(operationArray[0])
-        // Token right_number = new Number(operationArray[1])
+        //Token left_number = new Number(Double.parseDouble(operationArray[0]));
+        //Token right_number = new Number(Double.parseDouble(operationArray[1]));
 
         // return 
         return result;
