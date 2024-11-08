@@ -13,38 +13,51 @@ public abstract class Token {
 
     public static Token parseToken(String str_operation){
         Token result = new Number(0);
-        String[] operators = {"-","+","/","*"};
+        //String[] operators = {"\\-","\\+","\\/","\\*"};
+        List<String> operatorsList = new ArrayList<>();
+        operatorsList.add("-");
+        operatorsList.add("\\+");
+        operatorsList.add("\\*");
+        operatorsList.add("/");
         String[] operationArray;
 
         // base case will be if str_operation.length() == 2
         // then i will split the string i evaluate the symbol to make an operation and i evakuate that last number so i cen get a double to operate with the last 
         // token in the list. wich will lakely have a symbol before the number so i have to do the same thing 
-        for (int i = 0 ; i< operators.length ; i++){
-            if (str_operation.contains(operators[i])){
-                operationArray = str_operation.split(operators[i]);
+        for (int i = 0 ; i< operatorsList.size() ; i++){
+            boolean contains_operand = str_operation.contains(operatorsList.get(i));
+            if (contains_operand){ 
+                String operator = operatorsList.get(i);
+                operationArray = str_operation.split(operator);
                 //now i will parse EACH half 
                 Token first_token = Token.parseToken(operationArray[0]);
                 Token second_token = Token.parseToken(operationArray[1]);
 
-                if ("-".equals(operators[i])){ // minus is the symbol i just split on above, do a subst Token 
+                if ("-".equals(operatorsList.get(i))){ // minus is the symbol i just split on above, do a subst Token 
                     Subs substraction = new Subs(first_token, second_token);
+                    return substraction;
                     // i have a feeling thet this tokens should be added somewhere to have a strack of them
-                } else if ("+".equals(operators[i])){
+                } else if ("+".equals(operatorsList.get(i))){
                     Add addition = new Add(first_token,second_token);
-                } else if ("/".equals(operators[i])){
+                    return addition;
+                } else if ("/".equals(operatorsList.get(i))){
                     Division division = new Division(first_token,second_token);
-                } else if ("*".equals(operators[i])){
+                    return division;
+                } else if ("*".equals(operatorsList.get(i))){
                     Mlpt product = new Mlpt(first_token,second_token);
-                    product.eval();
-                }else {
-                    Number number = new Number(Double.parseDouble(str_operation));
-                    number.eval();
+                    return product;
                 }
+            } else if (str_operation.length() == 1){
+                Number number = new Number(Double.parseDouble(str_operation));
+                return number;
             }
-            
-
         }   
-        
+        // im missing the return.. after im done evaluating the operators, WHAT DO I DO NEXT?
+        // if im done with operations it means that i can evaluate those last 2 numbers so i can say that i will split that last pair of numbers and create 
+        //Token left_number = new Number(Double.parseDouble(operationArray[0]));
+        //Token right_number = new Number(Double.parseDouble(operationArray[1]));
+
+        // return 
         return result;
 
     }
